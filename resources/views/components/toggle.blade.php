@@ -1,0 +1,1 @@
+<input type="checkbox" id="{{@$switchId}}"  name="{{@$switchId}}" netliva-switch data-size="mini" data-active-text="Yes" data-passive-text="No"  data-active-color="#b96624" data-passive-color="#3b3b36"/>
