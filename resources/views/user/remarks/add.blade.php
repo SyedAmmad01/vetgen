@@ -79,6 +79,10 @@
                                             </select>
                                         </div>
                                     </div>
+
+                                    <input type="hidden" id="query_id" name="query_id" value="{{ $querie->id }}"/>
+
+
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Remarks</label>

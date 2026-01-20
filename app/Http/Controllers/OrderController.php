@@ -34,7 +34,8 @@ class OrderController extends Controller
             ->select('service_name')
             ->groupBy('service_name')
             ->get();
-        $lead_ref = LeadRef::all();
+        $ids = [1, 2, 3, 5, 12, 13];
+        $lead_ref = LeadRef::whereIn('id', $ids)->get();
         $time_of_services = TimeOfService::all();
         // Generate invoice number only for new attendance
         $last = Order::orderBy('id', 'desc')->first();
@@ -66,9 +67,10 @@ class OrderController extends Controller
         $querie = Query::find($id);
         $lead_ref = LeadRef::all();
         $fumigations = Service::whereIn('services', ['Fumigation', 'Cleaning'])
-            ->select('service_name')
             ->groupBy('service_name')
+            ->selectRaw('MIN(id) as id, service_name')
             ->get();
+
         $status = Status::all();
 
         // Generate invoice number only for new attendance
@@ -77,7 +79,7 @@ class OrderController extends Controller
         $invoice = 'VS/SR/' . str_pad($next, 2, '0', STR_PAD_LEFT);
 
         if ($exists) {
-            return view('user.survey.add', compact('querie', 'invoice', 'lead_ref', 'fumigations' , 'status'));
+            return view('user.survey.add', compact('querie', 'invoice', 'lead_ref', 'fumigations', 'status'));
         }
 
         $attend = new Attend();
@@ -89,7 +91,7 @@ class OrderController extends Controller
         $attend->delete = '0';
         $attend->save();
 
-        return view('user.survey.add', compact('querie', 'invoice', 'lead_ref', 'fumigations' , 'status'));
+        return view('user.survey.add', compact('querie', 'invoice', 'lead_ref', 'fumigations', 'status'));
     }
 
 
@@ -149,7 +151,7 @@ class OrderController extends Controller
         $attend->delete = '0';
         $attend->save();
 
-        return view('user.remarks.add', compact('querie', 'invoice' , 'status'));
+        return view('user.remarks.add', compact('querie', 'invoice', 'status'));
     }
 
     public function remarks_store(Request $request)

@@ -80,17 +80,20 @@
                                                 value="{{ $invoice ?? '' }}" readonly />
                                         </div>
                                     </div>
+
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Operator</label>
-                                            <select name="operator" id="operator" class="form-control">
+                                            <select name="operator" id="operator" class="form-control"
+                                                @if (Auth::user()->user_role === 'sales') disabled @endif>
                                                 <option value="" selected disabled>- Select -</option>
-                                                @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                @foreach ($users as $userItem)
+                                                    <option value="{{ $userItem->id }}">{{ $userItem->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
+
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Fumigation</label>
@@ -118,7 +121,7 @@
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Service Reference</label>
-                                            <select name="service_reference" id="service_reference" class="form-control">
+                                            <select name="service_reference" id="service_reference" class="form-control" @if (Auth::user()->user_role === 'operations') disabled @endif>
                                                 <option value="" selected disabled>- Select -</option>
                                                 @foreach ($lead_ref as $lead)
                                                     <option value="{{ $lead->id }}">{{ $lead->status_name }}
@@ -130,10 +133,11 @@
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Service Time</label>
-                                            <select name="service_time" id="service_time" class="form-control">
+                                            <select name="service_time" id="service_time" class="form-control" @if (Auth::user()->user_role === 'operations') disabled @endif>
                                                 <option value="" selected disabled>- Select -</option>
                                                 @foreach ($time_of_services as $time)
-                                                    <option value="{{ $time->id }}">{{ $time->slot }}-{{ $time->durations }}
+                                                    <option value="{{ $time->id }}">
+                                                        {{ $time->slot }}-{{ $time->durations }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -143,32 +147,36 @@
                                         <div class="input-style-1">
                                             <label>Customer</label>
                                             <input type="text" placeholder="Customer" id="customer" name="customer"
-                                                value="{{ $querie->name ?? '' }}" readonly />
+                                                value="{{ $querie->name ?? '' }}"
+                                                @if (Auth::user()->user_role === 'operations') readonly @endif />
+
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Address</label>
-                                            <input type="text" placeholder="Address" id="address" name="address" value="{{ $querie->city ?? '' }} - {{ $querie->area ?? '' }}" />
+                                            <input type="text" placeholder="Address" id="address" name="address"
+                                                value="{{ $querie->city ?? '' }} - {{ $querie->area ?? '' }}" @if (Auth::user()->user_role === 'operations') readonly @endif />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Contact</label>
                                             <input type="text" placeholder="Contact" id="contact" name="contact"
-                                                value="{{ $querie->phone ?? '' }}" readonly />
+                                                value="{{ $querie->phone ?? '' }}" @if (Auth::user()->user_role === 'operations') readonly @endif />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Amount</label>
-                                            <input type="text" placeholder="Amount" id="amount" name="amount" />
+                                            <input type="text" placeholder="Amount" id="amount" name="amount" @if (Auth::user()->user_role === 'operations') readonly @endif />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Service Status</label>
-                                            <select name="service_status" id="service_status" class="form-control">
+                                            <select name="service_status" id="service_status" class="form-control"
+                                                @if (Auth::user()->user_role === 'sales') disabled @endif>
                                                 <option value="" selected disabled>- Select -</option>
                                                 <option value="Pending">Pending</option>
                                                 <option value="Done">Done</option>
@@ -180,7 +188,8 @@
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Payment Status</label>
-                                            <select name="payment_status" id="payment_status" class="form-control">
+                                            <select name="payment_status" id="payment_status" class="form-control"
+                                                @if (Auth::user()->user_role === 'sales') disabled @endif>
                                                 <option value="" selected disabled>- Select -</option>
                                                 <option value="Online jazz/easy Paisa">Online jazz/easy Paisa</option>
                                                 <option value="Cash Payment">Cash Payment</option>
@@ -188,7 +197,8 @@
                                                 <option value="Payment Pending">Payment Pending</option>
                                                 <option value="No Payment">No Payment</option>
                                             </select>
-                                            </div>
+
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="input-style-1">

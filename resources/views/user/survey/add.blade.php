@@ -80,6 +80,7 @@
                                                 value="{{ $invoice ?? '' }}" readonly/>
                                         </div>
                                     </div>
+
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Services</label>
@@ -123,8 +124,9 @@
                                             <select name="assign_to" id="assign_to" class="form-control">
                                                 <option value="" selected disabled>- Select -</option>
                                                 <option value="RSQ">RSQ</option>
-                                                <option value="Vishal">Vishal</option>
-                                                <option value="Fumigator">Fumigator</option>
+                                                <option value="BDM">BDM</option>
+                                                <option value="3P">3P</option>
+                                                <option value="Operator">Operator</option>
                                             </select>
 
                                         </div>
