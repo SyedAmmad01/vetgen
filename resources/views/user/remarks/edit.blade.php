@@ -1,5 +1,5 @@
 @extends('layouts.front')
-@section('page_title', 'Add Remarks')
+@section('page_title', 'Edit Remarks')
 
 @section('content')
     <section class="tab-components">
@@ -9,7 +9,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <div class="title">
-                            <h2>Add Remarks</h2>
+                            <h2>Edit Remarks</h2>
                         </div>
                     </div>
                     <!-- end col -->
@@ -20,9 +20,9 @@
                                     <li class="breadcrumb-item">
                                         <a href="#0">Dashboard</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="#0">Orders</a></li>
+                                    <li class="breadcrumb-item"><a href="#0">Remarks</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">
-                                        Add Remarks
+                                        Edit Remarks
                                     </li>
                                 </ol>
                             </nav>
@@ -58,7 +58,7 @@
                 @endif
             </div>
 
-            <form class="form-validate" action="{{ route('user.remarks.store') }}" method="post"
+            <form class="form-validate" action="{{ route('user.remarks.update') }}" method="post"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="form-elements-wrapper">
@@ -73,38 +73,41 @@
                                             <select name="status" id="status" class="form-control">
                                                 <option value="" selected disabled>- Select -</option>
                                                 @foreach ($status as $stat)
-                                                    <option value="{{ $stat->id }}">{{ $stat->status_name }}
+                                                    <option value="{{ $stat->id }}" {{ $remarks->status == $stat->id ? 'selected' : '' }}>{{ $stat->status_name }}
                                                     </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
 
-                                    <input type="hidden" id="query_id" name="query_id" value="{{ $querie->id }}"/>
+                                    <input type="hidden" id="id" name="id" value="{{ $remarks->id }}"/>
+
+
+                                    <input type="hidden" id="query_id" name="query_id" value="{{ $remarks->query_id }}"/>
 
 
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Remarks</label>
-                                            <input type="text" placeholder="Remarks" id="remarks" name="remarks"/>
+                                            <input type="text" placeholder="Remarks" id="remarks" name="remarks" value="{{ $remarks->remarks }}"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Remarks 2nd Time</label>
-                                            <input type="text" placeholder="Remarks 2nd Time" id="remarks_2nd_time"
-                                                name="remarks_2nd_time" value=""/>
+                                            <input type="text" placeholder="Remarks 2nd Time" id="remarks_two"
+                                                name="remarks_two" value="{{ $remarks->remarks_two }}"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Remarks 3rd Time</label>
-                                            <input type="text" placeholder="Remarks 3rd Time" id="remarks_3rd_time" name="remarks_3rd_time" value=""/>
+                                            <input type="text" placeholder="Remarks 3rd Time" id="remarks_three" name="remarks_three" value="{{ $remarks->remarks_three }}"/>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <button class="main-btn primary-btn btn-hover" type="submit">
-                                            Add
+                                            Update
                                         </button>
                                     </div>
                                 </div>

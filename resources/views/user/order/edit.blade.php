@@ -1,5 +1,5 @@
 @extends('layouts.front')
-@section('page_title', 'Add Orders')
+@section('page_title', 'Edit Orders')
 
 @section('content')
     <section class="tab-components">
@@ -9,7 +9,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <div class="title">
-                            <h2>Add Orders</h2>
+                            <h2>Edit Orders</h2>
                         </div>
                     </div>
                     <!-- end col -->
@@ -22,7 +22,7 @@
                                     </li>
                                     <li class="breadcrumb-item"><a href="#0">Orders</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">
-                                        Add Orders
+                                        Edit Orders
                                     </li>
                                 </ol>
                             </nav>
@@ -58,7 +58,7 @@
                 @endif
             </div>
 
-            <form class="form-validate" action="{{ route('user.orders.store') }}" method="post"
+            <form class="form-validate" action="{{ route('user.orders.update') }}" method="post"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="form-elements-wrapper">
@@ -70,29 +70,37 @@
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Date</label>
-                                            <input type="date" placeholder="Date" id="date" name="date" />
+                                            <input type="date" placeholder="Date" id="date" name="date"
+                                                value="{{ $orders->date ?? '' }}" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Invoice No</label>
                                             <input type="text" placeholder="Invoice No" id="invoice_no" name="invoice_no"
-                                                value="{{ $invoice ?? '' }}" readonly />
+                                                value="{{ $orders->invoice_no ?? '' }}" readonly />
                                         </div>
                                     </div>
+
+
+                                    <input type="hidden" placeholder="id" id="id" name="id"
+                                                value="{{ $orders->id ?? '' }}" />
 
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Operator</label>
-                                            <select name="operator" id="operator" class="form-control"
-                                                @if (Auth::user()->user_role === 'sales')  @endif>
-                                                <option value="" selected disabled>- Select -</option>
+                                            <select name="operator" id="operator" class="form-control">
+                                                <option value="" disabled>- Select -</option>
                                                 @foreach ($users as $userItem)
-                                                    <option value="{{ $userItem->id }}">{{ $userItem->name }}</option>
+                                                    <option value="{{ $userItem->id }}"
+                                                        {{ $orders->operator == $userItem->id ? 'selected' : '' }}>
+                                                        {{ $userItem->name }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
+
 
 
                                     <div class="col-md-6">
@@ -101,7 +109,7 @@
                                             <select name="fumigation" id="fumigation" class="form-control">
                                                 <option value="" selected disabled>- Select -</option>
                                                 @foreach ($fumigations as $fumigation)
-                                                    <option value="{{ $fumigation->id }}">{{ $fumigation->service_name }}
+                                                    <option value="{{ $fumigation->id }}"{{ $orders->fumigation == $fumigation->id ? 'selected' : '' }}>{{ $fumigation->service_name }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -113,7 +121,7 @@
                                             <select name="cleaning" id="cleaning" class="form-control">
                                                 <option value="" selected disabled>- Select -</option>
                                                 @foreach ($cleanings as $cleaning)
-                                                    <option value="{{ $cleaning->id }}">{{ $cleaning->service_name }}
+                                                    <option value="{{ $cleaning->id }}" {{ $orders->cleaning == $cleaning->id ? 'selected' : '' }}>{{ $cleaning->service_name }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -122,10 +130,11 @@
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Service Reference</label>
-                                            <select name="service_reference" id="service_reference" class="form-control" @if (Auth::user()->user_role === 'operations') disabled @endif>
+                                            <select name="service_reference" id="service_reference" class="form-control"
+                                                @if (Auth::user()->user_role === 'operations') disabled @endif>
                                                 <option value="" selected disabled>- Select -</option>
                                                 @foreach ($lead_ref as $lead)
-                                                    <option value="{{ $lead->id }}">{{ $lead->status_name }}
+                                                    <option value="{{ $lead->id }}" {{ $orders->service_reference == $lead->id ? 'selected' : '' }}>{{ $lead->status_name }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -134,10 +143,11 @@
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Service Time</label>
-                                            <select name="service_time" id="service_time" class="form-control" @if (Auth::user()->user_role === 'operations') disabled @endif>
+                                            <select name="service_time" id="service_time" class="form-control"
+                                                @if (Auth::user()->user_role === 'operations') disabled @endif>
                                                 <option value="" selected disabled>- Select -</option>
                                                 @foreach ($time_of_services as $time)
-                                                    <option value="{{ $time->id }}">
+                                                    <option value="{{ $time->id }}" {{ $orders->service_time == $time->id ? 'selected' : '' }}>
                                                         {{ $time->slot }}-{{ $time->durations }}
                                                     </option>
                                                 @endforeach
@@ -148,7 +158,7 @@
                                         <div class="input-style-1">
                                             <label>Customer</label>
                                             <input type="text" placeholder="Customer" id="customer" name="customer"
-                                                value="{{ $querie->name ?? '' }}"
+                                                value="{{ $orders->customer ?? '' }}"
                                                 @if (Auth::user()->user_role === 'operations') readonly @endif />
 
                                         </div>
@@ -157,20 +167,24 @@
                                         <div class="input-style-1">
                                             <label>Address</label>
                                             <input type="text" placeholder="Address" id="address" name="address"
-                                                value="{{ $querie->city ?? '' }} - {{ $querie->area ?? '' }}" @if (Auth::user()->user_role === 'operations') readonly @endif />
+                                                value="{{ $orders->address ?? '' }}"
+                                                @if (Auth::user()->user_role === 'operations') readonly @endif />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Contact</label>
                                             <input type="text" placeholder="Contact" id="contact" name="contact"
-                                                value="{{ $querie->phone ?? '' }}" @if (Auth::user()->user_role === 'operations') readonly @endif />
+                                                value="{{ $orders->contact ?? '' }}"
+                                                @if (Auth::user()->user_role === 'operations') readonly @endif />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Amount</label>
-                                            <input type="text" placeholder="Amount" id="amount" name="amount" @if (Auth::user()->user_role === 'operations') readonly @endif />
+                                            <input type="text" placeholder="Amount" id="amount" name="amount"
+                                                value="{{ $orders->amount ?? '' }}"
+                                                @if (Auth::user()->user_role === 'operations') readonly @endif />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -179,10 +193,10 @@
                                             <select name="service_status" id="service_status" class="form-control"
                                                 @if (Auth::user()->user_role === 'sales') disabled @endif>
                                                 <option value="" selected disabled>- Select -</option>
-                                                <option value="Pending">Pending</option>
-                                                <option value="Done">Done</option>
-                                                <option value="Cancelled">Cancelled</option>
-                                                <option value="Postponed">Postponed</option>
+                                                <option value="Pending" {{ $orders->service_status == 'Pending' ? 'selected' : '' }}>Pending</option>
+                                                <option value="Done" {{ $orders->service_status == 'Done' ? 'selected' : '' }}>Done</option>
+                                                <option value="Cancelled" {{ $orders->service_status == 'Cancelled' ? 'selected' : '' }}>Cancelled</option>
+                                                <option value="Postponed" {{ $orders->service_status == 'Postponed' ? 'selected' : '' }}>Postponed</option>
                                             </select>
                                         </div>
                                     </div>
@@ -192,11 +206,11 @@
                                             <select name="payment_status" id="payment_status" class="form-control"
                                                 @if (Auth::user()->user_role === 'sales') disabled @endif>
                                                 <option value="" selected disabled>- Select -</option>
-                                                <option value="Online jazz/easy Paisa">Online jazz/easy Paisa</option>
-                                                <option value="Cash Payment">Cash Payment</option>
-                                                <option value="Cheque Payment">Cheque Payment</option>
-                                                <option value="Payment Pending">Payment Pending</option>
-                                                <option value="No Payment">No Payment</option>
+                                                <option value="Online jazz/easy Paisa" {{ $orders->payment_status == 'Online jazz/easy Paisa' ? 'selected' : '' }}>Online jazz/easy Paisa</option>
+                                                <option value="Cash Payment" {{ $orders->payment_status == 'Cash Payment' ? 'selected' : '' }}>Cash Payment</option>
+                                                <option value="Cheque Payment" {{ $orders->payment_status == 'Cheque Payment' ? 'selected' : '' }}>Cheque Payment</option>
+                                                <option value="Payment Pending" {{ $orders->payment_status == 'Payment Pending' ? 'selected' : '' }}>Payment Pending</option>
+                                                <option value="No Payment" {{ $orders->payment_status == 'No Payment' ? 'selected' : '' }}>No Payment</option>
                                             </select>
 
                                         </div>
@@ -204,12 +218,13 @@
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Remarks</label>
-                                            <input type="text" placeholder="Remarks" id="remarks" name="remarks" />
+                                            <input type="text" placeholder="Remarks" id="remarks" name="remarks"
+                                                value="{{ $orders->remarks ?? '' }}" />
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <button class="main-btn primary-btn btn-hover" type="submit">
-                                            Add
+                                            Update
                                         </button>
                                     </div>
                                 </div>

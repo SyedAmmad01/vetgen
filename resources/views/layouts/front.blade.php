@@ -10,12 +10,23 @@
 
     <!-- ========== All CSS files linkup ========= -->
     <link rel="stylesheet" href="{{ asset('front_assets') }}/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="{{ asset('front_assets') }}/assets/css/lineicons.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="{{ asset('front_assets') }}/assets/css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('front_assets') }}/assets/css/lineicons.css" rel="stylesheet"
+        type="text/css" />
+    <link rel="stylesheet" href="{{ asset('front_assets') }}/assets/css/materialdesignicons.min.css" rel="stylesheet"
+        type="text/css" />
     <link rel="stylesheet" href="{{ asset('front_assets') }}/assets/css/fullcalendar.css" />
     <link rel="stylesheet" href="{{ asset('front_assets') }}/assets/css/fullcalendar.css" />
     <link rel="stylesheet" href="{{ asset('front_assets') }}/assets/css/main.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.6/css/dataTables.dataTables.min.css" />
+
+
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/2.3.6/css/dataTables.dataTables.min.css"> --}}
+
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+
+
+
 </head>
 
 <body>
@@ -58,7 +69,14 @@
     <script src="{{ asset('front_assets') }}/assets/js/world-merc.js"></script>
     <script src="{{ asset('front_assets') }}/assets/js/polyfill.js"></script>
     <script src="{{ asset('front_assets') }}/assets/js/main.js"></script>
-    <script src="https://cdn.datatables.net/2.3.6/js/dataTables.dataTables.min.js"></script>
+
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/2.3.6/js/dataTables.dataTables.min.js"></script> --}}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+
 
     @yield('page-scripts')
 

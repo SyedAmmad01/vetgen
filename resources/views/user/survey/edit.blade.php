@@ -1,5 +1,5 @@
 @extends('layouts.front')
-@section('page_title', 'Add Surveys')
+@section('page_title', 'Edit Surveys')
 
 @section('content')
     <section class="tab-components">
@@ -9,7 +9,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <div class="title">
-                            <h2>Add Surveys</h2>
+                            <h2>Edit Surveys</h2>
                         </div>
                     </div>
                     <!-- end col -->
@@ -22,7 +22,7 @@
                                     </li>
                                     <li class="breadcrumb-item"><a href="#0">Surveys</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">
-                                        Add Surveys
+                                        Edit Surveys
                                     </li>
                                 </ol>
                             </nav>
@@ -58,7 +58,7 @@
                 @endif
             </div>
 
-            <form class="form-validate" action="{{ route('user.survey.store') }}" method="post"
+            <form class="form-validate" action="{{ route('user.survey.update') }}" method="post"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="form-elements-wrapper">
@@ -70,14 +70,20 @@
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Date</label>
-                                            <input type="date" placeholder="Date" id="date" name="date" />
+                                            <input type="date" placeholder="Date" id="date" name="date"
+                                                value="{{ $survey->date }}" />
                                         </div>
                                     </div>
+
+                                    <input type="hidden" placeholder="id" id="id" name="id"
+                                        value="{{ $survey->id }}" />
+
+
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Survey No</label>
-                                            <input type="text" placeholder="Survey No" id="survey_number" name="survey_number"
-                                                value="{{ $invoice ?? '' }}" readonly/>
+                                            <input type="text" placeholder="Survey No" id="survey_number"
+                                                name="survey_number" value="{{ $survey->survey_number ?? '' }}" readonly />
                                         </div>
                                     </div>
 
@@ -87,7 +93,7 @@
                                             <select name="services" id="services" class="form-control">
                                                 <option value="" selected disabled>- Select -</option>
                                                 @foreach ($fumigations as $fumigation)
-                                                    <option value="{{ $fumigation->id }}">{{ $fumigation->service_name }}
+                                                    <option value="{{ $fumigation->id }}" {{ $survey->services == $fumigation->id ? 'selected' : '' }}>{{ $fumigation->service_name }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -97,25 +103,28 @@
                                         <div class="input-style-1">
                                             <label>Contact Person</label>
                                             <input type="text" placeholder="Contact Person" id="contact_person"
-                                                name="contact_person" value="{{ $querie->name ?? '' }}" />
+                                                name="contact_person" value="{{ $survey->contact_person ?? '' }}" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Contact Details</label>
-                                            <input type="text" placeholder="Contact Details" id="contact_details" name="contact_details" value="{{ $querie->phone ?? '' }}" />
+                                            <input type="text" placeholder="Contact Details" id="contact_details"
+                                                name="contact_details" value="{{ $survey->contact_details ?? '' }}" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Time</label>
-                                            <input type="time" placeholder="Time" id="time" name="time" />
+                                            <input type="time" placeholder="Time" id="time" name="time"
+                                                value="{{ $survey->time }}" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Address</label>
-                                            <input type="text" placeholder="Address" id="address" name="address" value="{{ $querie->city ?? '' }} - {{ $querie->area ?? '' }}"/>
+                                            <input type="text" placeholder="Address" id="address" name="address"
+                                                value="{{ $survey->address ?? '' }} "/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -123,10 +132,10 @@
                                             <label>Assign To</label>
                                             <select name="assign_to" id="assign_to" class="form-control">
                                                 <option value="" selected disabled>- Select -</option>
-                                                <option value="RSQ">RSQ</option>
-                                                <option value="BDM">BDM</option>
-                                                <option value="3P">3P</option>
-                                                <option value="Operator">Operator</option>
+                                                <option value="RSQ" {{ $survey->assign_to == 'RSQ' ? 'selected' : '' }}>RSQ</option>
+                                                <option value="BDM" {{ $survey->assign_to == 'BDM' ? 'selected' : '' }}>BDM</option>
+                                                <option value="3P" {{ $survey->assign_to == '3P' ? 'selected' : '' }}>3P</option>
+                                                <option value="Operator" {{ $survey->assign_to == 'Operator' ? 'selected' : '' }}>Operator</option>
                                             </select>
 
                                         </div>
@@ -134,7 +143,8 @@
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Amount</label>
-                                            <input type="text" placeholder="Amount" id="amount" name="amount" />
+                                            <input type="text" placeholder="Amount" id="amount" name="amount"
+                                                value="{{ $survey->amount }}" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -143,7 +153,7 @@
                                             <select name="status" id="status" class="form-control">
                                                 <option value="" selected disabled>- Select -</option>
                                                 @foreach ($status as $stat)
-                                                    <option value="{{ $stat->id }}">{{ $stat->status_name }}
+                                                    <option value="{{ $stat->id }}" {{ $survey->status == $stat->id ? 'selected' : '' }}>{{ $stat->status_name }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -152,19 +162,20 @@
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Company Name</label>
-                                            <input type="text" placeholder="Company Name" id="company_name" name="company_name" />
+                                            <input type="text" placeholder="Company Name" id="company_name"
+                                                name="company_name" value="{{ $survey->company_name ?? '' }}" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Current Status</label>
                                             <input type="text" placeholder="Current Status" id="current_status"
-                                                name="current_status" />
+                                                name="current_status" value="{{ $survey->current_status ?? '' }}" />
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <button class="main-btn primary-btn btn-hover" type="submit">
-                                            Add
+                                            Update
                                         </button>
                                     </div>
                                 </div>

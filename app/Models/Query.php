@@ -18,6 +18,7 @@ class Query extends Model
         'area',
         'property_type',
         'attend',
+        'dump',
     ];
 
     use SoftDeletes;

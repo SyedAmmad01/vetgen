@@ -1,5 +1,11 @@
     @extends('layouts.front')
-    @section('page_title', 'All Queries')
+    @section('page_title', 'All Orders')
+
+    <style>
+        button {
+            cursor: pointer;
+        }
+    </style>
 
     @section('content')
         <section class="table-components">
@@ -9,7 +15,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <div class="title">
-                                <h2>All Queries</h2>
+                                <h2>All Orders</h2>
                             </div>
                         </div>
                         <!-- end col -->
@@ -21,7 +27,7 @@
                                             <a href="#0">Dashboard</a>
                                         </li>
                                         <li class="breadcrumb-item active" aria-current="page">
-                                            Queries
+                                            Orders
                                         </li>
                                     </ol>
                                 </nav>
@@ -46,28 +52,49 @@
                                                     <h6>#</h6>
                                                 </th>
                                                 <th>
-                                                    <h6>Name</h6>
+                                                    <h6>Date</h6>
                                                 </th>
                                                 <th>
-                                                    <h6>Phone</h6>
+                                                    <h6>Invoice No</h6>
                                                 </th>
                                                 <th>
-                                                    <h6>Email</h6>
+                                                    <h6>Operator</h6>
                                                 </th>
                                                 <th>
-                                                    <h6>Service</h6>
+                                                    <h6>Fumigation</h6>
                                                 </th>
                                                 <th>
-                                                    <h6>Services</h6>
+                                                    <h6>Cleaning</h6>
                                                 </th>
                                                 <th>
-                                                    <h6>City</h6>
+                                                    <h6>Service Reference</h6>
                                                 </th>
                                                 <th>
-                                                    <h6>Area</h6>
+                                                    <h6>Service Time</h6>
                                                 </th>
                                                 <th>
-                                                    <h6>Property Type</h6>
+                                                    <h6>Customer</h6>
+                                                </th>
+                                                <th>
+                                                    <h6>Address</h6>
+                                                </th>
+                                                <th>
+                                                    <h6>Contact</h6>
+                                                </th>
+                                                <th>
+                                                    <h6>Amount</h6>
+                                                </th>
+                                                <th>
+                                                    <h6>Service Status</h6>
+                                                </th>
+                                                <th>
+                                                    <h6>Payment Status</h6>
+                                                </th>
+                                                <th>
+                                                    <h6>Remarks</h6>
+                                                </th>
+                                                <th>
+                                                    <h6>Attend ID</h6>
                                                 </th>
                                                 <th>
                                                     <h6>Action</h6>
@@ -76,55 +103,79 @@
                                             <!-- end table row-->
                                         </thead>
                                         <tbody>
-                                            @foreach ($queries as $query)
+                                            @foreach ($orders as $order)
                                                 <tr>
                                                     <td class="min-width">
-                                                        <p>{{ $query->id }}</p>
+                                                        <p>{{ $order->id }}</p>
                                                     </td>
                                                     <td class="min-width">
-                                                        <p>{{ $query->name }}</p>
+                                                        <p>{{ $order->date }}</p>
                                                     </td>
                                                     <td class="min-width">
-                                                        <p><a href="#0">{{ $query->phone }}</a></p>
+                                                        <p><a href="#0">{{ $order->invoice_no }}</a></p>
                                                     </td>
                                                     <td class="min-width">
-                                                        <p>{{ $query->email }}</p>
+                                                        <p>{{ $order->name }}</p>
                                                     </td>
                                                     <td class="min-width">
-                                                        <p>{{ $query->service }}</p>
+                                                        <p>{{ $order->fumigation_name }}</p>
                                                     </td>
                                                     <td class="min-width">
-                                                        <p>{{ $query->services }}</p>
+                                                        <p>{{ $order->cleaning_name }}</p>
                                                     </td>
                                                     <td class="min-width">
-                                                        <p>{{ $query->city }}</p>
+                                                        <p>{{ $order->status_name }}</p>
                                                     </td>
                                                     <td class="min-width">
-                                                        <p>{{ $query->area }}</p>
+                                                        <p>{{ $order->slot }}</p>
                                                     </td>
                                                     <td class="min-width">
-                                                        <p>{{ $query->property_type }}</p>
+                                                        <p>{{ $order->customer }}</p>
+                                                    </td>
+                                                    <td class="min-width">
+                                                        <p>{{ $order->address }}</p>
+                                                    </td>
+                                                    <td class="min-width">
+                                                        <p>{{ $order->contact }}</p>
+                                                    </td>
+                                                    <td class="min-width">
+                                                        <p>{{ $order->amount }}</p>
+                                                    </td>
+                                                    <td class="min-width">
+                                                        <p>{{ $order->service_status }}</p>
+                                                    </td>
+                                                    <td class="min-width">
+                                                        <p>{{ $order->payment_status }}</p>
+                                                    </td>
+                                                    <td class="min-width">
+                                                        <p>{{ $order->remarks }}</p>
+                                                    </td>
+                                                    <td class="min-width">
+                                                        <p>{{ $order->remarks }}</p>
                                                     </td>
                                                     <td>
                                                         <div class="action">
-                                                            <a href="{{ route('user.orders.add', ['id' => $query->id]) }}"
-                                                                class="btn btn-success"
-                                                                style="padding:3px 8px;font-size:12px;display:inline-block;">Make
-                                                                Order</a>
-                                                            &nbsp;
-                                                            <a href="{{ route('user.survey.book', ['id' => $query->id]) }}" class="btn btn-primary"
-                                                                style="padding:3px 8px;font-size:12px;display:inline-block;">Book
-                                                                Survey</a>
-                                                            &nbsp;
-                                                            <a href="{{ route('user.remarks.customer', ['id' => $query->id]) }}" class="btn btn-primary"
-                                                                style="padding:3px 8px;font-size:12px;display:inline-block;">
-                                                                Remarks</a>
+                                                            <a
+                                                                href="{{ route('user.orders.edit', ['id' => $order->id]) }}"><i
+                                                                    class="lni lni-pencil-alt"></i></a>
+                                                            <form action="{{ route('user.orders.destroy', $order->id) }}"
+                                                                method="POST" style="display:inline;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit"
+                                                                    onclick="return confirm('Are you sure you want to delete this ?')"
+                                                                    style="border:none; background:none;">
+                                                                    <i class="lni lni-trash-can text-danger"></i>
+                                                                </button>
+                                                            </form>
+
                                                         </div>
                                                     </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
+
                                     <!-- end table -->
                                 </div>
                             </div>
@@ -141,8 +192,6 @@
 
     @endsection
 
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     @section('page-scripts')
 
         <script type="text/javascript">

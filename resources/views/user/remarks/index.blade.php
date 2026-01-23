@@ -1,5 +1,5 @@
     @extends('layouts.front')
-    @section('page_title', 'All Queries')
+    @section('page_title', 'All Remarks')
 
     @section('content')
         <section class="table-components">
@@ -9,7 +9,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <div class="title">
-                                <h2>All Queries</h2>
+                                <h2>All Remarks</h2>
                             </div>
                         </div>
                         <!-- end col -->
@@ -21,7 +21,7 @@
                                             <a href="#0">Dashboard</a>
                                         </li>
                                         <li class="breadcrumb-item active" aria-current="page">
-                                            Queries
+                                            Remarks
                                         </li>
                                     </ol>
                                 </nav>
@@ -46,28 +46,19 @@
                                                     <h6>#</h6>
                                                 </th>
                                                 <th>
-                                                    <h6>Name</h6>
+                                                    <h6>Query ID</h6>
                                                 </th>
                                                 <th>
-                                                    <h6>Phone</h6>
+                                                    <h6>Status</h6>
                                                 </th>
                                                 <th>
-                                                    <h6>Email</h6>
+                                                    <h6>Remarks</h6>
                                                 </th>
                                                 <th>
-                                                    <h6>Service</h6>
+                                                    <h6>Remarks Two</h6>
                                                 </th>
                                                 <th>
-                                                    <h6>Services</h6>
-                                                </th>
-                                                <th>
-                                                    <h6>City</h6>
-                                                </th>
-                                                <th>
-                                                    <h6>Area</h6>
-                                                </th>
-                                                <th>
-                                                    <h6>Property Type</h6>
+                                                    <h6>Remarks Three</h6>
                                                 </th>
                                                 <th>
                                                     <h6>Action</h6>
@@ -76,55 +67,46 @@
                                             <!-- end table row-->
                                         </thead>
                                         <tbody>
-                                            @foreach ($queries as $query)
+                                            @foreach ($remarks as $remark)
                                                 <tr>
                                                     <td class="min-width">
-                                                        <p>{{ $query->id }}</p>
+                                                        <p>{{ $remark->id }}</p>
                                                     </td>
                                                     <td class="min-width">
-                                                        <p>{{ $query->name }}</p>
+                                                        <p>{{ $remark->query_id }}</p>
                                                     </td>
                                                     <td class="min-width">
-                                                        <p><a href="#0">{{ $query->phone }}</a></p>
+                                                        <p><a href="#0">{{ $remark->status_name }}</a></p>
                                                     </td>
                                                     <td class="min-width">
-                                                        <p>{{ $query->email }}</p>
+                                                        <p>{{ $remark->remarks }}</p>
                                                     </td>
                                                     <td class="min-width">
-                                                        <p>{{ $query->service }}</p>
+                                                        <p>{{ $remark->remarks_two }}</p>
                                                     </td>
                                                     <td class="min-width">
-                                                        <p>{{ $query->services }}</p>
-                                                    </td>
-                                                    <td class="min-width">
-                                                        <p>{{ $query->city }}</p>
-                                                    </td>
-                                                    <td class="min-width">
-                                                        <p>{{ $query->area }}</p>
-                                                    </td>
-                                                    <td class="min-width">
-                                                        <p>{{ $query->property_type }}</p>
+                                                        <p>{{ $remark->remarks_three }}</p>
                                                     </td>
                                                     <td>
                                                         <div class="action">
-                                                            <a href="{{ route('user.orders.add', ['id' => $query->id]) }}"
-                                                                class="btn btn-success"
-                                                                style="padding:3px 8px;font-size:12px;display:inline-block;">Make
-                                                                Order</a>
-                                                            &nbsp;
-                                                            <a href="{{ route('user.survey.book', ['id' => $query->id]) }}" class="btn btn-primary"
-                                                                style="padding:3px 8px;font-size:12px;display:inline-block;">Book
-                                                                Survey</a>
-                                                            &nbsp;
-                                                            <a href="{{ route('user.remarks.customer', ['id' => $query->id]) }}" class="btn btn-primary"
-                                                                style="padding:3px 8px;font-size:12px;display:inline-block;">
-                                                                Remarks</a>
+                                                            <a href="{{ route('user.remarks.edit', ['id' => $remark->id]) }}"><i class="lni lni-pencil-alt"></i></a>
+                                                            <form action="{{ route('user.remarks.destroy', $remark->id) }}"
+                                                                method="POST" style="display:inline;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit"
+                                                                    onclick="return confirm('Are you sure you want to delete this ?')"
+                                                                    style="border:none; background:none;">
+                                                                    <i class="lni lni-trash-can text-danger"></i>
+                                                                </button>
+                                                            </form>
                                                         </div>
                                                     </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
+
                                     <!-- end table -->
                                 </div>
                             </div>
@@ -141,8 +123,6 @@
 
     @endsection
 
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     @section('page-scripts')
 
         <script type="text/javascript">

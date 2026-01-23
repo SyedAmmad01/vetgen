@@ -30,14 +30,20 @@
                                 d="M13.125 2.29167L16.0417 5.20834H14.1667C13.5913 5.20834 13.125 4.74197 13.125 4.16667V2.29167Z" />
                         </svg>
                     </span>
-                    <span class="text">Orders</span>
+                    <span class="text">Pages</span>
                 </a>
                 <ul id="ddmenu_2" class="collapse dropdown-nav">
                     <li>
                         <a href="{{ route('user.queries.index') }}"> Queries </a>
                     </li>
                     <li>
-                        <a href=""> Orders </a>
+                        <a href="{{ route('user.orders.index') }}"> Orders </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('user.survey.index') }}"> Survey </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('user.remarks.index') }}"> Remarks </a>
                     </li>
                 </ul>
             </li>

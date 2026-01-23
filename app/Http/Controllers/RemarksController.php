@@ -4,62 +4,101 @@ namespace App\Http\Controllers;
 
 use App\Models\Remarks;
 use Illuminate\Http\Request;
+use App\Models\Order;
+use App\Models\Attend;
+use App\Models\LeadRef;
+use App\Models\Query;
+use App\Models\Service;
+use App\Models\Survey;
+use App\Models\User;
+use App\Models\time_of_service;
+use App\Models\TimeOfService;
+use App\Models\Status;
+use Illuminate\Support\Facades\DB;
 
 class RemarksController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $remarks = Remarks::leftJoin('statuses', 'remarks.status', '=', 'statuses.id')->select('remarks.*', 'statuses.status_name')->get();
+        return view('user.remarks.index', compact('remarks'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function customer($id)
     {
-        //
+        $exists = Attend::where('query_id', $id)
+            ->where('attend_id', auth()->user()->id)
+            ->exists();
+
+        $querie = Query::find($id);
+        $status = Status::all();
+
+
+        // Generate invoice number only for new attendance
+        $last = Survey::orderBy('id', 'desc')->first();
+        $next = $last ? $last->id + 1 : 1;
+        $invoice = 'VS/SR/' . str_pad($next, 2, '0', STR_PAD_LEFT);
+
+        if ($exists) {
+            return view('user.remarks.add', compact('querie', 'invoice', 'status'));
+        }
+
+        $attend = new Attend();
+        $attend->query_id = $id;
+        $attend->attend_id = auth()->user()->id;
+        $attend->time = now()->toTimeString();
+        $attend->date = now()->toDateString();
+        $attend->attend = '1';
+        $attend->delete = '0';
+        $attend->save();
+
+        return view('user.remarks.add', compact('querie', 'invoice', 'status'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        // Save all incoming request data except _token
+        $data = $request->except('_token');
+
+        $remarks = Remarks::create($data); // Make sure $fillable is set in Remarks model
+
+        if ($remarks) {
+            return redirect()->back()->with('success', 'Remarks saved successfully!');
+        } else {
+            return redirect()->back()->with('error', 'Remarks could not be saved.');
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Remarks $remarks)
+    public function edit($id)
     {
-        //
+        $remarks = Remarks::find($id);
+        $status = Status::all();
+        return view('user.remarks.edit', compact('remarks', 'status'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Remarks $remarks)
+    public function update(Request $request)
     {
-        //
+        $remarks = Remarks::find($request->id);
+        if (!$remarks) {
+            return redirect()->back()->with('error', 'Remarks not found!');
+        }
+        // token & method remove karo
+        $data = $request->except(['_token', '_method']);
+        // update
+        $remarks->update($data);
+        return redirect()->back()->with('success', 'Survey updated successfully!');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Remarks $remarks)
+    public function destroy($id)
     {
-        //
-    }
+        $remarks = Remarks::find($id);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Remarks $remarks)
-    {
-        //
+        if (!$remarks) {
+            return redirect()->back()->with('error', 'Remarks not found!');
+        }
+
+        $remarks->delete(); // 👈 soft delete
+
+        return redirect()->back()->with('success', 'Remarks deleted successfully!');
     }
 }

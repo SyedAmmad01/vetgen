@@ -1,5 +1,11 @@
     @extends('layouts.front')
-    @section('page_title', 'All Queries')
+    @section('page_title', 'All Surveys')
+
+    <style>
+        button {
+            cursor: pointer;
+        }
+    </style>
 
     @section('content')
         <section class="table-components">
@@ -9,7 +15,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <div class="title">
-                                <h2>All Queries</h2>
+                                <h2>All Surveys</h2>
                             </div>
                         </div>
                         <!-- end col -->
@@ -21,7 +27,7 @@
                                             <a href="#0">Dashboard</a>
                                         </li>
                                         <li class="breadcrumb-item active" aria-current="page">
-                                            Queries
+                                            Surveys
                                         </li>
                                     </ol>
                                 </nav>
@@ -46,28 +52,40 @@
                                                     <h6>#</h6>
                                                 </th>
                                                 <th>
-                                                    <h6>Name</h6>
+                                                    <h6>Survey Number</h6>
                                                 </th>
                                                 <th>
-                                                    <h6>Phone</h6>
-                                                </th>
-                                                <th>
-                                                    <h6>Email</h6>
-                                                </th>
-                                                <th>
-                                                    <h6>Service</h6>
+                                                    <h6>Date</h6>
                                                 </th>
                                                 <th>
                                                     <h6>Services</h6>
                                                 </th>
                                                 <th>
-                                                    <h6>City</h6>
+                                                    <h6>Contact Person</h6>
                                                 </th>
                                                 <th>
-                                                    <h6>Area</h6>
+                                                    <h6>Contact Details</h6>
                                                 </th>
                                                 <th>
-                                                    <h6>Property Type</h6>
+                                                    <h6>Time</h6>
+                                                </th>
+                                                <th>
+                                                    <h6>Address</h6>
+                                                </th>
+                                                <th>
+                                                    <h6>Assign To</h6>
+                                                </th>
+                                                <th>
+                                                    <h6>Amount</h6>
+                                                </th>
+                                                <th>
+                                                    <h6>Status</h6>
+                                                </th>
+                                                <th>
+                                                    <h6>Company Name</h6>
+                                                </th>
+                                                <th>
+                                                    <h6>Current Status</h6>
                                                 </th>
                                                 <th>
                                                     <h6>Action</h6>
@@ -76,55 +94,68 @@
                                             <!-- end table row-->
                                         </thead>
                                         <tbody>
-                                            @foreach ($queries as $query)
+                                            @foreach ($surveys as $survey)
                                                 <tr>
                                                     <td class="min-width">
-                                                        <p>{{ $query->id }}</p>
+                                                        <p>{{ $survey->id }}</p>
                                                     </td>
                                                     <td class="min-width">
-                                                        <p>{{ $query->name }}</p>
+                                                        <p>{{ $survey->survey_number }}</p>
                                                     </td>
                                                     <td class="min-width">
-                                                        <p><a href="#0">{{ $query->phone }}</a></p>
+                                                        <p><a href="#0">{{ $survey->date }}</a></p>
                                                     </td>
                                                     <td class="min-width">
-                                                        <p>{{ $query->email }}</p>
+                                                        <p>{{ $survey->service_name }}</p>
                                                     </td>
                                                     <td class="min-width">
-                                                        <p>{{ $query->service }}</p>
+                                                        <p>{{ $survey->contact_person }}</p>
                                                     </td>
                                                     <td class="min-width">
-                                                        <p>{{ $query->services }}</p>
+                                                        <p>{{ $survey->contact_details }}</p>
                                                     </td>
                                                     <td class="min-width">
-                                                        <p>{{ $query->city }}</p>
+                                                        <p>{{ $survey->time }}</p>
                                                     </td>
                                                     <td class="min-width">
-                                                        <p>{{ $query->area }}</p>
+                                                        <p>{{ $survey->address }}</p>
                                                     </td>
                                                     <td class="min-width">
-                                                        <p>{{ $query->property_type }}</p>
+                                                        <p>{{ $survey->assign_to }}</p>
+                                                    </td>
+                                                    <td class="min-width">
+                                                        <p>{{ $survey->amount }}</p>
+                                                    </td>
+                                                    <td class="min-width">
+                                                        <p>{{ $survey->status_name }}</p>
+                                                    </td>
+                                                    <td class="min-width">
+                                                        <p>{{ $survey->company_name }}</p>
+                                                    </td>
+                                                    <td class="min-width">
+                                                        <p>{{ $survey->current_status }}</p>
                                                     </td>
                                                     <td>
                                                         <div class="action">
-                                                            <a href="{{ route('user.orders.add', ['id' => $query->id]) }}"
-                                                                class="btn btn-success"
-                                                                style="padding:3px 8px;font-size:12px;display:inline-block;">Make
-                                                                Order</a>
-                                                            &nbsp;
-                                                            <a href="{{ route('user.survey.book', ['id' => $query->id]) }}" class="btn btn-primary"
-                                                                style="padding:3px 8px;font-size:12px;display:inline-block;">Book
-                                                                Survey</a>
-                                                            &nbsp;
-                                                            <a href="{{ route('user.remarks.customer', ['id' => $query->id]) }}" class="btn btn-primary"
-                                                                style="padding:3px 8px;font-size:12px;display:inline-block;">
-                                                                Remarks</a>
+                                                            <a href="{{ route('user.survey.edit', $survey->id) }}"><i
+                                                                    class="lni lni-pencil-alt"></i></a>
+                                                            <form action="{{ route('user.survey.destroy', $survey->id) }}"
+                                                                method="POST" style="display:inline;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit"
+                                                                    onclick="return confirm('Are you sure you want to delete this ?')"
+                                                                    style="border:none; background:none;">
+                                                                    <i class="lni lni-trash-can text-danger"></i>
+                                                                </button>
+                                                            </form>
                                                         </div>
                                                     </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
+
                                     <!-- end table -->
                                 </div>
                             </div>
@@ -141,8 +172,6 @@
 
     @endsection
 
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     @section('page-scripts')
 
         <script type="text/javascript">
