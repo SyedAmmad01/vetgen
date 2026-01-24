@@ -57,6 +57,7 @@ class RemarksController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         // Save all incoming request data except _token
         $data = $request->except('_token');
 

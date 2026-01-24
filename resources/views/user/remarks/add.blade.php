@@ -86,20 +86,29 @@
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Remarks</label>
-                                            <input type="text" placeholder="Remarks" id="remarks" name="remarks"/>
+                                            <select name="remarks" id="remarks" class="form-control">
+                                                <option value="" selected disabled>- Select -</option>
+                                                <option value="First remarks">First remarks</option>
+                                                <option value="Not answering">Not answering</option>
+                                                <option value="Only for rates">Only for rates</option>
+                                                <option value="Need after sometime">Need after sometime</option>
+                                                <option value="Rates issue">Rates issue</option>
+                                            </select>
                                         </div>
                                     </div>
+
+
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Remarks 2nd Time</label>
-                                            <input type="text" placeholder="Remarks 2nd Time" id="remarks_2nd_time"
-                                                name="remarks_2nd_time" value=""/>
+                                            <input type="text" placeholder="Remarks 2nd Time" id="remarks_two"
+                                                name="remarks_two" value=""/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Remarks 3rd Time</label>
-                                            <input type="text" placeholder="Remarks 3rd Time" id="remarks_3rd_time" name="remarks_3rd_time" value=""/>
+                                            <input type="text" placeholder="Remarks 3rd Time" id="remarks_three" name="remarks_three" value=""/>
                                         </div>
                                     </div>
                                     <div class="col-12">

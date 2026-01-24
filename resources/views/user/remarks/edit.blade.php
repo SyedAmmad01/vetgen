@@ -89,7 +89,14 @@
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Remarks</label>
-                                            <input type="text" placeholder="Remarks" id="remarks" name="remarks" value="{{ $remarks->remarks }}"/>
+                                            <select name="remarks" id="remarks" class="form-control">
+                                                <option value="" selected disabled>- Select -</option>
+                                                <option value="First remarks" {{ $remarks->remarks == 'First remarks' ? 'selected' : '' }}>First remarks</option>
+                                                <option value="Not answering" {{ $remarks->remarks == 'Not answering' ? 'selected' : '' }}>Not answering</option>
+                                                <option value="Only for rates" {{ $remarks->remarks == 'Only for rates' ? 'selected' : '' }}>Only for rates</option>
+                                                <option value="Need after sometime" {{ $remarks->remarks == 'Need after sometime' ? 'selected' : '' }}>Need after sometime</option>
+                                                <option value="Rates issue" {{ $remarks->remarks == 'Rates issue' ? 'selected' : '' }}>Rates issue</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
