@@ -61,6 +61,26 @@ class SurveyController extends Controller
         return view('user.survey.add', compact('querie', 'invoice', 'lead_ref', 'fumigations', 'status'));
     }
 
+    public function create(Request $request)
+    {
+
+        $lead_ref = LeadRef::all();
+        $fumigations = Service::whereIn('services', ['Fumigation', 'Cleaning'])
+            ->groupBy('service_name')
+            ->selectRaw('MIN(id) as id, service_name')
+            ->get();
+
+        $status = Status::all();
+
+        // Generate invoice number only for new attendance
+        $last = Survey::orderBy('id', 'desc')->first();
+        $next = $last ? $last->id + 1 : 1;
+        $invoice = 'VS/SR/' . str_pad($next, 2, '0', STR_PAD_LEFT);
+
+
+        return view('user.survey.create', compact( 'invoice', 'lead_ref', 'fumigations', 'status'));
+    }
+
     public function store(Request $request)
     {
         // Save all incoming request data except _token
@@ -71,7 +91,7 @@ class SurveyController extends Controller
         if ($survey) {
             return redirect()->back()->with('success', 'Survey saved successfully!');
         } else {
-            return redirect()->back()->with('error', 'Survey could not be saved.');
+            return redirect()->back()->with('msg', 'Survey could not be saved.');
         }
     }
 
@@ -91,7 +111,7 @@ class SurveyController extends Controller
     {
         $survey = Survey::find($request->id);
         if (!$survey) {
-            return redirect()->back()->with('error', 'Survey not found!');
+            return redirect()->back()->with('msg', 'Survey not found!');
         }
         // token & method remove karo
         $data = $request->except(['_token', '_method']);
@@ -105,7 +125,7 @@ class SurveyController extends Controller
         $survey = Survey::find($id);
 
         if (!$survey) {
-            return redirect()->back()->with('error', 'Survey not found!');
+            return redirect()->back()->with('msg', 'Survey not found!');
         }
 
         $survey->delete(); // 👈 soft delete

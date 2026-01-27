@@ -12,7 +12,8 @@ class QueryController extends Controller
      */
     public function index()
     {
-        $queries = Query::all();
+        // $queries = Query::all();
+        $queries = Query::leftJoin('attends', 'queries.id', '=', 'attends.query_id')->select('queries.*' , 'attends.attend')->get();
         return view('user.queries.index', compact('queries'));
     }
 

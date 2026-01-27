@@ -8,7 +8,7 @@ use App\Http\Controllers\RemarksController;
 use App\Models\Survey;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+Route::get('/login', function () {
     return view('welcome');
 });
 
@@ -34,6 +34,7 @@ Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
 
     // All Orders Routes
     Route::get('/user/orders', [OrderController::class, 'index'])->name('user.orders.index');
+    Route::get('/user/orders/create', [OrderController::class, 'create'])->name('user.orders.create');
     Route::get('/user/orders/add/{id}', [OrderController::class, 'add'])->name('user.orders.add');
     Route::get('/user/orders/edit/{id}', [OrderController::class, 'edit'])->name('user.orders.edit');
     Route::post('/user/orders/update', [OrderController::class, 'update'])->name('user.orders.update');
@@ -45,6 +46,7 @@ Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
 
     // All Survey Routes
     Route::get('/user/survey', [SurveyController::class, 'index'])->name('user.survey.index');
+    Route::get('/user/survey/create', [SurveyController::class, 'create'])->name('user.survey.create');
     Route::get('/user/survey/book/{id}', [SurveyController::class, 'book'])->name('user.survey.book');
     Route::post('/user/survey/store', [SurveyController::class, 'store'])->name('user.survey.store');
     Route::get('/user/survey/edit/{id}', [SurveyController::class, 'edit'])->name('user.survey.edit');
@@ -54,6 +56,7 @@ Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
 
     // All Remarks Routes
     Route::get('/user/remarks', [RemarksController::class, 'index'])->name('user.remarks.index');
+    Route::get('/user/remarks/create', [RemarksController::class, 'create'])->name('user.remarks.create');
     Route::get('/user/remarks/customer/{id}', [RemarksController::class, 'customer'])->name('user.remarks.customer');
     Route::post('/user/remarks/store', [RemarksController::class, 'store'])->name('user.remarks.store');
     Route::get('/user/remarks/edit/{id}', [RemarksController::class, 'edit'])->name('user.remarks.edit');

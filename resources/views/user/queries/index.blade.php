@@ -70,6 +70,9 @@
                                                     <h6>Property Type</h6>
                                                 </th>
                                                 <th>
+                                                    <h6>Status</h6>
+                                                </th>
+                                                <th>
                                                     <h6>Action</h6>
                                                 </th>
                                             </tr>
@@ -105,18 +108,27 @@
                                                     <td class="min-width">
                                                         <p>{{ $query->property_type }}</p>
                                                     </td>
+                                                    <td class="min-width">
+                                                        @if ($query->attend == 1)
+                                                            <span class="btn btn-sm btn-success" style="padding:3px 8px;font-size:12px;display:inline-block;">Attended</span>
+                                                        @else
+                                                            <span class="btn btn-sm btn-danger" style="padding:3px 8px;font-size:10px;display:inline-block;">Not Attended</span>
+                                                        @endif
+                                                    </td>
                                                     <td>
                                                         <div class="action">
                                                             <a href="{{ route('user.orders.add', ['id' => $query->id]) }}"
                                                                 class="btn btn-success"
-                                                                style="padding:3px 8px;font-size:12px;display:inline-block;">Make
+                                                                style="padding:3px 8px;font-size:10px;display:inline-block;">Make
                                                                 Order</a>
                                                             &nbsp;
-                                                            <a href="{{ route('user.survey.book', ['id' => $query->id]) }}" class="btn btn-primary"
-                                                                style="padding:3px 8px;font-size:12px;display:inline-block;">Book
+                                                            <a href="{{ route('user.survey.book', ['id' => $query->id]) }}"
+                                                                class="btn btn-primary"
+                                                                style="padding:3px 8px;font-size:10px;display:inline-block;">Book
                                                                 Survey</a>
                                                             &nbsp;
-                                                            <a href="{{ route('user.remarks.customer', ['id' => $query->id]) }}" class="btn btn-primary"
+                                                            <a href="{{ route('user.remarks.customer', ['id' => $query->id]) }}"
+                                                                class="btn btn-primary"
                                                                 style="padding:3px 8px;font-size:12px;display:inline-block;">
                                                                 Remarks</a>
                                                         </div>

@@ -45,6 +45,11 @@
                         <div class="col-lg-12">
                             <div class="card-style mb-30">
                                 <div class="table-wrapper table-responsive">
+                                    <div>
+                                        <a href="{{ route('user.survey.create') }}" class="main-btn primary-btn btn-hover btn-sm mt-3">Create New
+                                            Survey</a>
+                                    </div>
+                                    &nbsp;
                                     <table class="table" id="myDataTable">
                                         <thead>
                                             <tr>

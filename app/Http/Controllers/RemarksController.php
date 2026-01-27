@@ -55,20 +55,61 @@ class RemarksController extends Controller
         return view('user.remarks.add', compact('querie', 'invoice', 'status'));
     }
 
+    public function create(Request $request)
+    {
+        $querie = Query::all();
+        $status = Status::all();
+        // Generate invoice number only for new attendance
+        $last = Survey::orderBy('id', 'desc')->first();
+        $next = $last ? $last->id + 1 : 1;
+        $invoice = 'VS/SR/' . str_pad($next, 2, '0', STR_PAD_LEFT);
+
+        return view('user.remarks.create', compact('querie', 'invoice', 'status'));
+    }
+
+    // public function store(Request $request)
+    // {
+    //     // dd($request->all());
+    //     // Save all incoming request data except _token
+    //     $data = $request->except('_token');
+
+    //     $remarks = Remarks::create($data); // Make sure $fillable is set in Remarks model
+
+    //     if ($remarks) {
+    //         return redirect()->back()->with('success', 'Remarks saved successfully!');
+    //     } else {
+    //         return redirect()->back()->with('error', 'Remarks could not be saved.');
+    //     }
+    // }
+
     public function store(Request $request)
     {
-        // dd($request->all());
-        // Save all incoming request data except _token
-        $data = $request->except('_token');
+        // Validate input (optional but recommended)
+        $request->validate([
+            'query_id' => 'required',
+            'remarks'  => 'required|string',
+        ]);
 
-        $remarks = Remarks::create($data); // Make sure $fillable is set in Remarks model
+        // Check if same remark already exists for this query_id
+        $exists = Remarks::where('query_id', $request->query_id)
+            ->where('remarks', $request->remarks)
+            ->exists();
+
+        if ($exists) {
+            return redirect()->back()->with('msg', 'This remark already exists for this query!');
+        }
+
+        // Save data
+        $data = $request->except('_token');
+        $remarks = Remarks::create($data);
 
         if ($remarks) {
             return redirect()->back()->with('success', 'Remarks saved successfully!');
         } else {
-            return redirect()->back()->with('error', 'Remarks could not be saved.');
+            return redirect()->back()->with('msg', 'Remarks could not be saved.');
         }
     }
+
 
     public function edit($id)
     {
@@ -81,7 +122,7 @@ class RemarksController extends Controller
     {
         $remarks = Remarks::find($request->id);
         if (!$remarks) {
-            return redirect()->back()->with('error', 'Remarks not found!');
+            return redirect()->back()->with('msg', 'Remarks not found!');
         }
         // token & method remove karo
         $data = $request->except(['_token', '_method']);
@@ -95,7 +136,7 @@ class RemarksController extends Controller
         $remarks = Remarks::find($id);
 
         if (!$remarks) {
-            return redirect()->back()->with('error', 'Remarks not found!');
+            return redirect()->back()->with('msg', 'Remarks not found!');
         }
 
         $remarks->delete(); // 👈 soft delete
