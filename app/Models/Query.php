@@ -19,6 +19,7 @@ class Query extends Model
         'property_type',
         'attend',
         'dump',
+        'promo_code',
     ];
 
     use SoftDeletes;

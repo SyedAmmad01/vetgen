@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('area');
             $table->string('property_type');
             $table->string('attend')->default('0');
+            $table->string('promo_code')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

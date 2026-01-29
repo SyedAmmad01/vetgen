@@ -28,6 +28,8 @@ return new class extends Migration
             $table->string('payment_status')->nullable();
             $table->string('remarks')->nullable();
             $table->string('attend_id')->nullable();
+            $table->string('promo_code')->nullable();
+            $table->string('location')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

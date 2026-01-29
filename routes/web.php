@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QueryController;
@@ -63,6 +64,12 @@ Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
     Route::post('/user/remarks/update', [RemarksController::class, 'update'])->name('user.remarks.update');
     Route::delete('/user/remarks/destroy/{id}', [RemarksController::class, 'destroy'])->name('user.remarks.destroy');
     // All Remarks Routes
+
+    // All Invoices Routes
+    Route::get('/user/invoices/generate/{id}', [InvoiceController::class, 'invoices_generate'])->name('user.invoices.invoice_generate');
+    // All Invoices Routes
+
+
 });
 
 // Admin Dashboard

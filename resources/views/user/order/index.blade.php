@@ -63,6 +63,9 @@
                                                     <h6>Invoice No</h6>
                                                 </th>
                                                 <th>
+                                                    <h6>Promo Code</h6>
+                                                </th>
+                                                <th>
                                                     <h6>Operator</h6>
                                                 </th>
                                                 <th>
@@ -82,6 +85,9 @@
                                                 </th>
                                                 <th>
                                                     <h6>Address</h6>
+                                                </th>
+                                                <th>
+                                                    <h6>Location</h6>
                                                 </th>
                                                 <th>
                                                     <h6>Contact</h6>
@@ -120,6 +126,9 @@
                                                         <p><a href="#0">{{ $order->invoice_no }}</a></p>
                                                     </td>
                                                     <td class="min-width">
+                                                        <p>{{ $order->promo_code }}</p>
+                                                    </td>
+                                                    <td class="min-width">
                                                         <p>{{ $order->name }}</p>
                                                     </td>
                                                     <td class="min-width">
@@ -141,6 +150,9 @@
                                                         <p>{{ $order->address }}</p>
                                                     </td>
                                                     <td class="min-width">
+                                                        <p>{{ $order->location }}</p>
+                                                    </td>
+                                                    <td class="min-width">
                                                         <p>{{ $order->contact }}</p>
                                                     </td>
                                                     <td class="min-width">
@@ -156,13 +168,17 @@
                                                         <p>{{ $order->remarks }}</p>
                                                     </td>
                                                     <td class="min-width">
-                                                        <p>{{ $order->remarks }}</p>
+                                                        <p>{{ $order->attend_id }}</p>
                                                     </td>
                                                     <td>
                                                         <div class="action">
+                                                            <a href="{{ route('user.invoices.invoice_generate', ['id' => $order->id]) }}" class="btn btn-success"
+                                                                style="padding:3px 8px;font-size:8px;display:inline-block;"> Generate Invoice</a>
+                                                            &nbsp;
                                                             <a
                                                                 href="{{ route('user.orders.edit', ['id' => $order->id]) }}"><i
                                                                     class="lni lni-pencil-alt"></i></a>
+                                                            &nbsp;
                                                             <form action="{{ route('user.orders.destroy', $order->id) }}"
                                                                 method="POST" style="display:inline;">
                                                                 @csrf

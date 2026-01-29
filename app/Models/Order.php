@@ -24,6 +24,8 @@ class Order extends Model
         'payment_status',
         'attend_id',
         'remarks',
+        'promo_code',
+        'location',
     ];
 
     use SoftDeletes;

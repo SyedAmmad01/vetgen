@@ -81,11 +81,21 @@
                                         </div>
                                     </div>
 
+
+                                    <div class="col-md-6">
+                                        <div class="input-style-1">
+                                            <label>Promo Code</label>
+                                            <input type="text" placeholder="Promo Code" id="promo_code" name="promo_code"
+                                                value="{{ $querie->promo_code ?? '' }}" />
+                                        </div>
+                                    </div>
+
+
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Operator</label>
                                             <select name="operator" id="operator" class="form-control"
-                                                @if (Auth::user()->user_role === 'sales')  @endif>
+                                                @if (Auth::user()->user_role === 'sales') disabled @endif>
                                                 <option value="" selected disabled>- Select -</option>
                                                 @foreach ($users as $userItem)
                                                     <option value="{{ $userItem->id }}">{{ $userItem->name }}</option>
@@ -199,6 +209,12 @@
                                                 <option value="No Payment">No Payment</option>
                                             </select>
 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-style-1">
+                                            <label>Location</label>
+                                            <input type="text" placeholder="Location" id="location" name="location" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">

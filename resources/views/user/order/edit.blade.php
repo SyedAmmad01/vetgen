@@ -82,6 +82,14 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-md-6">
+                                        <div class="input-style-1">
+                                            <label>Promo Code</label>
+                                            <input type="text" placeholder="Promo Code" id="promo_code" name="promo_code"
+                                                value="{{ $orders->promo_code ?? '' }}" />
+                                        </div>
+                                    </div>
+
 
                                     <input type="hidden" placeholder="id" id="id" name="id"
                                                 value="{{ $orders->id ?? '' }}" />
@@ -215,6 +223,14 @@
 
                                         </div>
                                     </div>
+
+                                    <div class="col-md-6">
+                                        <div class="input-style-1">
+                                            <label>Location</label>
+                                            <input type="text" placeholder="Location" id="location" name="location" value="{{ $orders->location ?? '' }}" />
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-6">
                                         <div class="input-style-1">
                                             <label>Remarks</label>
@@ -222,6 +238,7 @@
                                                 value="{{ $orders->remarks ?? '' }}" />
                                         </div>
                                     </div>
+
                                     <div class="col-12">
                                         <button class="main-btn primary-btn btn-hover" type="submit">
                                             Update

@@ -73,6 +73,9 @@
                                                     <h6>Status</h6>
                                                 </th>
                                                 <th>
+                                                    <h6>Promo Code</h6>
+                                                </th>
+                                                <th>
                                                     <h6>Action</h6>
                                                 </th>
                                             </tr>
@@ -107,6 +110,9 @@
                                                     </td>
                                                     <td class="min-width">
                                                         <p>{{ $query->property_type }}</p>
+                                                    </td>
+                                                    <td class="min-width">
+                                                        <p>{{ $query->promo_code }}</p>
                                                     </td>
                                                     <td class="min-width">
                                                         @if ($query->attend == 1)
