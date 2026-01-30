@@ -172,8 +172,11 @@
                                                     </td>
                                                     <td>
                                                         <div class="action">
-                                                            <a href="{{ route('user.invoices.invoice_generate', ['id' => $order->id]) }}" class="btn btn-success"
-                                                                style="padding:3px 8px;font-size:8px;display:inline-block;"> Generate Invoice</a>
+                                                            <a href="{{ route('user.invoices.invoice_generate_private', ['id' => $order->id]) }}" class="btn btn-success"
+                                                                style="padding:3px 8px;font-size:8px;display:inline-block;"> Generate Invoice Private</a>
+                                                                &nbsp;
+                                                            <a href="{{ route('user.invoices.invoice_generate_srb', ['id' => $order->id]) }}" class="btn btn-info"
+                                                                style="padding:3px 8px;font-size:8px;display:inline-block; color: white;"> Generate Invoice SRB</a>
                                                             &nbsp;
                                                             <a
                                                                 href="{{ route('user.orders.edit', ['id' => $order->id]) }}"><i

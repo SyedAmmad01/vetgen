@@ -66,7 +66,14 @@ Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
     // All Remarks Routes
 
     // All Invoices Routes
-    Route::get('/user/invoices/generate/{id}', [InvoiceController::class, 'invoices_generate'])->name('user.invoices.invoice_generate');
+    Route::get('/user/invoices/invoices_generate_private/{id}', [InvoiceController::class, 'invoices_generate_private'])->name('user.invoices.invoice_generate_private');
+    Route::get('/user/invoices/invoices_generate_srb/{id}', [InvoiceController::class, 'invoices_generate_srb'])->name('user.invoices.invoice_generate_srb');
+    Route::post('/user/invoices/invoices_private_store', [InvoiceController::class, 'invoices_private_store'])->name('user.invoices.invoices_private_store');
+    Route::post('/user/invoices/invoices_srb_store', [InvoiceController::class, 'invoices_srb_store'])->name('user.invoices.invoices_srb_store');
+    Route::get('/user/invoices/invoices/pdf/{id}', [InvoiceController::class, 'downloadInvoicePDF'])->name('user.invoices.pdf');
+
+
+
     // All Invoices Routes
 
 
